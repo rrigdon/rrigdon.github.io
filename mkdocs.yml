@@ -1,0 +1,106 @@
+# Project info
+site_name: Rachel Rigdon's Writing Portfolio
+site_url: https://rrigdon.github.io/
+site_author: Rachel Rigdon
+
+# Repository
+repo_name: rrigdon/rrigdon.github.io
+repo_url: https://github.com/rrigdon/rrigdon.github.io
+
+# Copyright
+copyright: Copyright &copy; 2023 Rachel Rigdon
+
+# Configuration
+theme:
+  name: material
+  logo: rachel_icon.png
+  favicon: rachel_icon.png
+  features:
+    - content.code.annotate
+    - content.code.copy
+    - content.tooltips
+    - navigation.footer
+    - navigation.indexes
+    - navigation.instant
+    - navigation.prune
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.suggest
+    - toc.follow
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+# Plugins
+plugins: 
+  - search
+
+# Customization
+
+# extra: 
+
+
+# Extensions
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:materialx.emoji.twemoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+  # Page tree
+nav:
+  - Home: index.md
+  - Cloud Governance:
+    - cloud_gov/index.md
+    - Configuring your CSPs:
+      - cloud_gov/csp/index.md
+      - Configuring AWS: config_aws.md
+      - Configuring Azure Cloud: config_azure.md 
+      - Configuring Google Cloud Provider: config_gcp.md
+  - Internal Processes:
+      - internal/index.md
+      - Authoring Your Docs: internal/authoring.md
+      - Release Notes: internal/release_notes.md 
