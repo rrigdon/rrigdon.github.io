@@ -9,7 +9,7 @@ You can view samples of my writing from:
 
 - Actively maintained [Identity Security public documentation](id_security.md) from SailPoint Technologies
 - [Anaconda](anaconda/index.md), the Python package distributor
-- [CS Disco](disco/index.md), a legaltech startup
+- [CS Disco](disco.md), a legaltech startup
 - [Academic work](academic.md)
 
 ## Additional Resources

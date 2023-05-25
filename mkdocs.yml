@@ -101,7 +101,7 @@ nav:
     - Building conda packages: anaconda/building-conda-packages.md
     - Building conda packages from scratch: anaconda/build-pkgs.md
     - Using conda with Travis CI: anaconda/use-conda-with-travis-ci.md
-  - Legaltech: disco/index.md
+  - Legaltech: disco.md
   - Academic: academic.md
 
     
