@@ -92,10 +92,11 @@ nav:
   - Home: index.md
   - Anaconda:
     - anaconda/index.md
-    - Conda: anaconda/conda.md
-    - Miniconda: anaconda/miniconda.md
-    - Build Recipes: anaconda/recipe.md
-    - Building Skeleton Packages: anaconda/build-pkgs-skeleton.md
+    - Conda-build recipes: anaconda/recipe.md
+    - Building skeleton packages: anaconda/build-pkgs-skeleton.md
+    - Building conda packages: anaconda/building-conda-packages.md
+    - Building conda packages from scratch: anaconda/build-pkgs.md
+    - Using conda with Travis CI: anaconda/use-conda-with-travis-ci.md
   - Identity Security: id_security.md
     
 docs_dir:

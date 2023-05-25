@@ -1,10 +1,5 @@
 # Building conda packages
 
-::: {.contents local="" depth="1"}
-:::
-
-## Overview
-
 This tutorial describes how to use conda build to create conda packages
 on Windows, Linux, and Mac operating systems using the examples of SEP
 and GDAL. Additional Windows-specific instructions are provided in the
@@ -13,8 +8,8 @@ and GDAL. Additional Windows-specific instructions are provided in the
 The final built packages from this tutorial are available on [Anaconda
 Cloud](https://anaconda.org):
 
--   [SEP](https://anaconda.org/wwarner/sep/files).
--   [GDAL](https://anaconda.org/conda-forge/gdal/files).
+-   [SEP](https://anaconda.org/wwarner/sep/files)
+-   [GDAL](https://anaconda.org/conda-forge/gdal/files)
 
 This tutorial also describes writing recipes. You can see the final [SEP
 recipe](https://github.com/conda-forge/sep-feedstock) and the [GDAL
@@ -33,9 +28,9 @@ Python versions.
 
 Before you start, make sure you have installed:
 
-> -   [conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html)
-> -   `conda build <install-conda-build>`{.interpreted-text role="ref"}
-> -   any compilers you want
+- conda
+- conda build
+- any compilers you want
 
 ## Toolkit
 
@@ -85,8 +80,8 @@ The MS Visual C++ Compiler for Python 2.7 and the Microsoft Windows SDK
 for Windows 7 and .NET Framework 4 are both reasonably well tested.
 Conda build is carefully tested to support these configurations, but
 there are known issues with the CMake build tool and these free VS 2008
-and 2010 alternatives. In these cases, you should prefer the \"NMake
-Makefile\" generator, rather than a Visual Studio solution generator.
+and 2010 alternatives. In these cases, you should prefer the "NMake
+Makefile" generator, rather than a Visual Studio solution generator.
 
 ### Windows versions
 
@@ -102,7 +97,7 @@ On Windows these can be installed with conda:
 
 `conda install git m2-patch`
 
-On macOS and Linux replace `m2-patch` with patch
+On macOS and Linux replace `m2-patch` with `patch`
 
 ## Developing a build strategy
 
@@ -132,38 +127,28 @@ To build a package for a Python version other than the one in your
 Miniconda installation, use the `--python` option in the `conda-build`
 command.
 
-EXAMPLE: To build a Python 3.5 package with Miniconda2:
+!!! Example
+    To build a Python 3.5 package with Miniconda2:
 
-    conda-build recipeDirectory --python=3.5
+    `conda-build recipeDirectory --python=3.5`
 
-::: note
-::: title
-Note
-:::
-
-Replace `recipeDirectory` with the name and path of your recipe
-directory.
-:::
+    Replace `recipeDirectory` with the name and path of your recipe
+    directory.
 
 ## Automated testing
 
 After the build, if the recipe directory contains a test file named
 `run_test.bat` on Windows, or `run_test.sh` on macOS or Linux, or
 `run_test.py` on any platform, the file runs to test the package, and
-any errors are reported. After seeing \"check the output,\" you can also
+any errors are reported. After seeing "check the output," you can also
 test if this package was built by using the command:
 
-    $ conda build --test <path to package>.tar.bz2
+    conda build --test <path to package>.tar.bz2
 
-::: note
-::: title
-Note
-:::
 
-Use the `Test section of the meta.yaml file
-<meta-test>`{.interpreted-text role="ref"} to move data files from the
-recipe directory to the test directory when the test is run.
-:::
+!!! Note
+    Use the Test section of the `meta.yaml` file to move data files from the
+    recipe directory to the test directory when the test is run.
 
 ## Building a SEP package with conda and Python 2 or 3
 
@@ -182,17 +167,19 @@ conda can build a conda package from the completed recipe.
 If you have not already done so, install the appropriate version of
 Visual Studio:
 
--   For Python 3\-\--Visual Studio 2017:
+For Python 3- Visual Studio 2017:
     1.  Choose Custom install.
     2.  Under Programming Languages, choose to install Visual C++.
--   For Python 2\-\--Visual Studio 2008:
+
+For Python 2-Visual Studio 2008:
     1.  Choose Custom install.
-    2.  Choose to install X64 Compilers and Tools. Install Service Pack
-        1.
+    2.  Choose to install X64 Compilers and Tools. 
+    3.  Install Service Pack.
+
 
 ### Make a conda skeleton recipe
 
-1.  Run the skeleton command:
+1. Run the skeleton command:
 
         conda skeleton pypi sep
 
@@ -203,37 +190,33 @@ Visual Studio:
 
         cd sep
 
-    One skeleton file has been created: `meta.yaml`
+One skeleton file has been created: `meta.yaml`
 
 ### Edit the skeleton files
 
 For this package, `bld.bat` and `build.sh` need no changes. You need to
 edit the `meta.yaml` file to add the dependency on NumPy and add an
-optional test for the built package by importing it. For more
-information about what can be specified in meta.yaml, see
-`../../resources/define-metadata`{.interpreted-text role="doc"}.
+optional test for the built package by importing it.
 
 1.  In the requirements section of the `meta.yaml` file, add a line that
     adds NumPy as a requirement to build the package.
 2.  Add a second line to list NumPy as a requirement to run the package.
+3.  Set the NumPy version to the letters `x.x`.
 
-Set the NumPy version to the letters `x.x`.
+    Make sure the new line is aligned with `- python` on the line above it, so as to ensure proper yaml format.
 
-Make sure the new line is aligned with `- python` on the line above it,
-so as to ensure proper yaml format.
+!!! example
 
-EXAMPLE:
+    ``` yaml
+    requirements:
+    host:
+        - python
+        - numpy     x.x
 
-``` yaml
-requirements:
-  host:
-    - python
-    - numpy     x.x
-
-  run:
-    - python
-    - numpy     x.x
-```
+    run:
+        - python
+        - numpy     x.x
+    ```
 
 Notice that there are two types of requirements, host and run. Host
 represents packages that need to be specific to the target platform when
@@ -241,37 +224,32 @@ the target platform is not necessarily the same as the native build
 platform. Run represents the dependencies that should be installed when
 the package is installed.
 
-::: note
-::: title
-Note
-:::
+!!! Note
 
-Using the letters `x.x` instead of a specific version such as `1.11`
-pins NumPy dynamically, so that the actual version of NumPy is taken
-from the build command. Currently, NumPy is the only package that can be
-pinned dynamically. Pinning is important for SEP because this package
-uses NumPy\'s C API through Cython. That API changes between NumPy
-versions, so it is important to use the same NumPy version at runtime
-that was used at build time.
-:::
+    Using the letters `x.x` instead of a specific version such as `1.11`
+    pins NumPy dynamically, so that the actual version of NumPy is taken
+    from the build command. Currently, NumPy is the only package that can be
+    pinned dynamically. Pinning is important for SEP because this package
+    uses NumPy's C API through Cython. That API changes between NumPy
+    versions, so it is important to use the same NumPy version at runtime
+    that was used at build time.
 
-#### OPTIONAL: Add a test for the built package
+#### Add a test for the built package
 
 Adding this optional test will test the package at the end of the build
 by making sure that the Python statement `import sep` runs successfully:
 
-1.  Add `- sep`, checking to be sure that the indentation is consistent
+Add `- sep`, checking to be sure that the indentation is consistent
     with the rest of the file.
 
-    EXAMPLE:
+!!! Example
 
     ``` yaml
     test:
-      # Python imports
-      imports:
+    # Python imports
+    imports:
         - sep
     ```
-
 ### Build the package
 
 Build the package using the recipe you just created:
@@ -280,31 +258,31 @@ Build the package using the recipe you just created:
 
 ### Check the output
 
-1.  Check the output to make sure that the build completed successfully.
+Check the output to make sure that the build completed successfully.
     The output contains the location of the final package file and a
     command to upload the package to Anaconda Cloud. The output will
     look something like:
 
-    ``` yaml
-    # Automatic uploading is disabled
-    # If you want to upload package(s) to anaconda.org later, type:
-    anaconda upload /Users/builder/miniconda3/conda-bld/osx-64/sep-1.0.3-np111py36_0.tar.bz2
-    # To have conda build upload to anaconda.org automatically, use
-    # $ conda config --set anaconda_upload yes
-    anaconda_upload is not set.  Not uploading wheels: []
-    ####################################################################################
-    Resource usage summary:
-    Total time: 0:00:56.4
-    CPU usage: sys=0:00:00.7, user=0:00:07.0
-    Maximum memory usage observed: 220.1M
-    Total disk usage observed (not including envs): 3.9K
-    ####################################################################################
-    Source and build intermediates have been left in /Users/builder/miniconda3/conda-bld.
-    There are currently 437 accumulated.
-    To remove them, you can run the ```conda build purge``` command
-    ```
+``` yaml
+# Automatic uploading is disabled
+# If you want to upload package(s) to anaconda.org later, type:
+anaconda upload /Users/builder/miniconda3/conda-bld/osx-64/sep-1.0.3-np111py36_0.tar.bz2
+# To have conda build upload to anaconda.org automatically, use
+# $ conda config --set anaconda_upload yes
+anaconda_upload is not set.  Not uploading wheels: []
+####################################################################################
+Resource usage summary:
+Total time: 0:00:56.4
+CPU usage: sys=0:00:00.7, user=0:00:07.0
+Maximum memory usage observed: 220.1M
+Total disk usage observed (not including envs): 3.9K
+####################################################################################
+Source and build intermediates have been left in /Users/builder/miniconda3/conda-bld.
+There are currently 437 accumulated.
+To remove them, you can run the ```conda build purge``` command
+```
 
-2.  If there are any linker or compiler errors, modify the recipe and
+If there are any linker or compiler errors, modify the recipe and
     build again.
 
 ## Building a GDAL package with conda and Python 2 or 3
@@ -355,79 +333,65 @@ To build a GDAL package:
 5.  Check the output to make sure the build completed successfully. The
     output also contains the location of the final package file and a
     command to upload the package to Cloud. For this package in
-    particular, there should be two packages outputted: libgdal and
+    particular, there should be two packages that are output: libgdal and
     GDAL.
 
 6.  In case of any linker or compiler errors, modify the recipe and run
     it again.
 
-Let's take a better look at what's happening inside the gdal-feedstock.
-In particular, what is happening in the meta.yaml.
+    ??? "Closer look at the gdal-feedstock" 
 
-The first interesting bit happens under `source`, it's the patches
-section: :
+        Let's take a better look at what's happening inside the GDAL-feedstock.
+        In particular, what is happening in the `meta.yaml`.
 
-    patches:
-      # BUILT_AS_DYNAMIC_LIB.
-      - 0001-windowshdf5.patch
-      # Use multiple cores on Windows.
-      - 0002-multiprocessor.patch
-      # disable 12 bit jpeg on Windows as we aren't using internal jpeg
-      - 0003-disable_jpeg12.patch
+        The first interesting bit happens under `source` in the patches
+        section:
 
-This section says that when this package is being built on a Windows
-platform, apply the following patch files. Notice that the patch files
-are in the [patches]{.title-ref} directory of the recipe. These patches
-will only be applied to windows since the `# [win]` selector is applied
-to each of the patch entries. For more about selectors, see
-`preprocess-selectors`{.interpreted-text role="ref"}.
+            patches:
+            # BUILT_AS_DYNAMIC_LIB.
+            - 0001-windowshdf5.patch
+            # Use multiple cores on Windows.
+            - 0002-multiprocessor.patch
+            # disable 12 bit jpeg on Windows as we aren't using internal jpeg
+            - 0003-disable_jpeg12.patch
 
-In the requirements section, notice how there are both a build and host
-set of requirements. For this recipe, all the compilers required to
-build the package are listed in the build requirements. Normally, this
-section will list out packages required to build the package. GDAL
-requires CMake on Windows, as well as C compilers. Notice that the C
-compilers are pulled into the recipe using the syntax
-`{{ compiler('c') }}`. Since conda build 3, conda build defines a jinja2
-function `compiler()` to specify compiler packages dynamically. So,
-using the `compiler(‘c’)` function in a conda recipe will pull in the
-correct compiler for any build platform. For more information about
-compilers with conda build see
-`compiler-tools<compiler-tools>`{.interpreted-text role="ref"}.
+        This section says that when this package is being built on a Windows
+        platform, apply the following patch files. Notice that the patch files
+        are in the patches directory of the recipe. These patches
+        will only be applied to Windows since the `# [win]` selector is applied
+        to each of the patch entries.
 
-Also note that the compilers used by conda build can be specified using
-a conda_build_config.yaml. For more information about how to do that,
-see
-`using-your-customized-compiler-package-with-conda-build-3`{.interpreted-text
-role="ref"}.
+        In the requirements section, notice how there are both a build and host
+        set of requirements. For this recipe, all the compilers required to
+        build the package are listed in the build requirements.
 
-Notice that this package has an `outputs` section. This section is a
-list of packages to output as a result of building this package. In this
-case, the packages libgdal and GDAL will be built. Similar to a normal
-recipe, the outputs can have build scripts, tests scripts and
-requirements specified. For more information on how outputs work, see
-the `package-outputs`{.interpreted-text role="ref"}.
+        Normally, the requirements section will list out packages required to build the package. GDAL requires CMake on Windows, as well as C compilers. Notice that the C
+        compilers are pulled into the recipe using the syntax
+        `{{ compiler('c') }}`. Since conda build 3, conda build defines a jinja2
+        function `compiler()` to specify compiler packages dynamically. So,
+        using the `compiler(‘c’)` function in a conda recipe will pull in the
+        correct compiler for any build platform.
 
-Now, let\'s try to build GDAL against some build matrix. We will specify
+        You can see that the compilers used by conda build can be specified using
+        a `conda_build_config.yaml`.
+
+        Notice that this package has an `outputs` section. This section is a
+        list of packages to output as a result of building this package. In this
+        case, the packages libgdal and GDAL will be built. Similar to a normal
+        recipe, the outputs can have build scripts, tests scripts and
+        requirements specified.
+
+7. Build GDAL against some build matrix. We will specify
 building against Python 3.7 and 3.5 using a conda build config. Add the
-following to your conda_build_config.yaml
+following to your `conda_build_config.yaml`.
 
-``` yaml
-python:
-   - 3.7
-   - 3.5
-```
+    ``` yaml
+    python:
+    - 3.7
+    - 3.5
+    ```
 
-Now you can build GDAL using conda build with the command
+1. Now you can build GDAL using conda-build: `conda build gdal-feedstock`
 
-`conda build gdal-feedstock`
+    Or explicitly set the location of the conda build variant matrix: `conda build gdal-feedstock --variant-config-file conda_build_config.yaml`
 
-Or explicitly set the location of the conda build variant matrix
-
-`conda build gdal-feedstock --variant-config-file conda_build_config.yaml`
-
-If you want to know more about build variants and
-conda_build_config.yaml, including how to specify a config file and what
-can go into it, take a look at
-`conda-build-variant-config-files`{.interpreted-text role="ref"}. at
-`conda-build-variant-config-files`{.interpreted-text role="ref"}.
