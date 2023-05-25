@@ -13,7 +13,7 @@ copyright: Copyright &copy; 2023 Rachel Rigdon
 # Configuration
 theme:
   name: material
-  custom_dir: overrides
+  custom_dir: src/overrides
   logo: assets/letter_r.png
   favicon: assets/letter_r.png
   features:
@@ -43,6 +43,9 @@ plugins:
 extra:
   annotate:
     json: [.s2]
+  social:
+  - icon: fontawesome/brands/linkedin
+    link: https://www.linkedin.com/in/rachel-rigdon/
 
 
 # Extensions

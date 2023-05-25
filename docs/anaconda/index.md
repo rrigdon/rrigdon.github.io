@@ -10,4 +10,4 @@ A few examples from my time at Anaconda include:
 - [Building skeleton packages](build-pkgs-skeleton.md)
 - [Building conda packages](building-conda-packages.md)
 - [Building conda packages from scratch](building-conda-packages.md)
-- [Using conda with Travis CI](using-conda-with-travis-ci.md)
+- [Using conda with Travis CI](use-conda-with-travis-ci.md)
