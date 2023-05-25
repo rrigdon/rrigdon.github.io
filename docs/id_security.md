@@ -1,4 +1,4 @@
-# Identity Security Samples
+# Identity Security Writing Samples
 
 I created and implemented the docs-as-code setup for SailPoint Technolgies, which included training 10+ writers in using the custom stack to publish 8+ websites. 
 
