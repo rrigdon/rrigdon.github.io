@@ -14,12 +14,10 @@ copyright: Copyright &copy; 2023 Rachel Rigdon
 theme:
   name: material
   custom_dir: overrides
-  logo: rachel_icon.png
-  favicon: rachel_icon.png
+  logo: assets/letter_r.png
+  favicon: assets/letter_r.png
   features:
     - content.code.annotate
-    - content.code.copy
-    - content.code.select
     - content.tooltips
     - navigation.footer
     - navigation.indexes
@@ -30,20 +28,8 @@ theme:
     - search.highlight
     - search.suggest
     - toc.follow
+    - announce.dismiss
 
-  palette:
-    - scheme: default
-      primary: indigo
-      accent: indigo
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
-    - scheme: slate
-      primary: indigo
-      accent: indigo
-      toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
 
 # Plugins
 plugins: 
@@ -55,11 +41,6 @@ plugins:
 
 # extra: 
 extra:
-  homepage: https://documentation.sailpoint.com
-  analytics:
-    provider: google
-    property: UA-190532626-1
-  generator: false
   annotate:
     json: [.s2]
 
@@ -104,6 +85,7 @@ plugins:
   - search
   - autolinks
   - redirects
+  - glightbox
 
 # Page tree
 nav:
@@ -114,17 +96,7 @@ nav:
     - Miniconda: anaconda/miniconda.md
     - Build Recipes: anaconda/recipe.md
     - Building Skeleton Packages: anaconda/build-pkgs-skeleton.md
-  - Cloud Governance:
-    - cloud_gov/index.md
-    - Configuring your CSPs:
-      - cloud_gov/csp/index.md
-      - Configuring AWS: config_aws.md
-      - Configuring Azure Cloud: config_azure.md 
-      - Configuring Google Cloud Provider: config_gcp.md
-  - Internal Processes:
-      - internal/index.md
-      - Authoring Your Docs: internal/authoring.md
-      - Release Notes: internal/release_notes.md 
+  - Identity Security: id_security.md
     
 docs_dir:
   docs

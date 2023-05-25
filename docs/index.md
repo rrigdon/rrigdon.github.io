@@ -4,7 +4,4 @@ My first job was at 13 writing about rodeos and stick horse races, and I haven't
 
 I've worked as both a solo tech writer and a team lead producing software documentation for government agencies, start-ups, and large-scale enterprises. I excel at creating and training technical processes, including managing a docs-as-code system used by 10+ writers to support 11+ help sites. 
 
-I'm skilled in docs-as-code, technical writing, editing, GitHub, project management, consulting, content writing, training, Confluence, Jira, agile, mentoring, and learning new things.
-
-## SaaS Security Samples
-
+You can view samples of my writing from [Anaconda](anaconda/index.md), the Python package distributor, as well as actively maintained [public documentation](id_security.md) from SailPoint Technologies. 

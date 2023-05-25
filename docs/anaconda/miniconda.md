@@ -1,6 +1,4 @@
----
-title: Miniconda
----
+# Miniconda
 
 Miniconda is a free minimal installer for conda. It is a small,
 bootstrap version of Anaconda that includes only conda, Python, the
