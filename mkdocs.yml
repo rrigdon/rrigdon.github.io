@@ -93,6 +93,7 @@ plugins:
 # Page tree
 nav:
   - Home: index.md
+  - Identity Security: id_security.md
   - Anaconda:
     - anaconda/index.md
     - Conda-build recipes: anaconda/recipe.md
@@ -100,8 +101,9 @@ nav:
     - Building conda packages: anaconda/building-conda-packages.md
     - Building conda packages from scratch: anaconda/build-pkgs.md
     - Using conda with Travis CI: anaconda/use-conda-with-travis-ci.md
-  - Identity Security: id_security.md
+  - Legaltech: disco/index.md
   - Academic: academic.md
+
     
 docs_dir:
   docs
