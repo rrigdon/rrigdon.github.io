@@ -1,6 +1,8 @@
 # Identity Security Samples
 
-I manage the documentation for multiple identity security and access governance products.
+I created and implemented the docs-as-code setup for SailPoint Technolgies, which included training 10+ writers in using the custom stack to publish 8+ websites. 
+
+I additionally manage the documentation for multiple identity security and access governance products for SailPoint Technologies, including:
 
 - [SailPoint Cloud Infrastructure Entitlement Management (CIEM)](https://documentation.sailpoint.com/saas/help/ciem/index.html)
 

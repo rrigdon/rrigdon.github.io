@@ -101,6 +101,7 @@ nav:
     - Building conda packages from scratch: anaconda/build-pkgs.md
     - Using conda with Travis CI: anaconda/use-conda-with-travis-ci.md
   - Identity Security: id_security.md
+  - Academic: academic.md
     
 docs_dir:
   docs
