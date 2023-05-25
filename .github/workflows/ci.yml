@@ -22,8 +22,7 @@ jobs:
             mkdocs-material-
       - run: pip install \
               mkdocs-material \
-              search \
               mkdocs-autolinks-plugin \
               mkdocs-redirects \
-              mkdocs-glightbox
+              mkdocs-glightbox \
       - run: mkdocs gh-deploy --force
