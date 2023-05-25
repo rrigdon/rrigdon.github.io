@@ -1,3 +1,8 @@
+---
+search:
+    exclude: true
+---
+
 # Conda
 
 *Package, dependency and environment management for any

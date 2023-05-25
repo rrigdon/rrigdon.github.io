@@ -1,6 +1,5 @@
 # Building conda packages with conda skeleton
 
-
 This tutorial describes how to quickly build a conda package for a
 Python module that is already available on PyPI.
 

@@ -1,3 +1,8 @@
+---
+search:
+    exclude: true
+---
+
 # Using wheel files with conda
 
 If you have software in a [Python wheel file](https://pythonwheels.com/)

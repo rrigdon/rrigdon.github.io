@@ -15,8 +15,7 @@ CI. However, you can use conda with any language, not just Python.
 ## The .travis.yml file
 
 The following code sample shows how to modify the `.travis.yml` file to
-use [Miniconda](https://conda.io/miniconda.html) for a project that
-supports Python 2.7, 3.5, and 3.6:
+use [Minicond](https://docs.conda.io/en/latest/miniconda.html) for a project that supports Python 2.7, 3.5, and 3.6:
 
 ``` yaml
 language: python
@@ -90,18 +89,16 @@ well.
     - conda install your-package --use-local
     ```
 
-AppVeyor
-========
+## AppVeyor
 
 [AppVeyor](http://www.appveyor.com/) is a continuous build service for
 Windows built on Azure and is an alternative to using Travis CI with
 conda.
 
 For an example project building conda packages on AppVeyor, see
-<https://github.com/rmcgibbo/python-appveyor-conda-example>.
+<https://github.com/rmcgibbo/python-appveyor-conda-example>
 
-Bootstrap your environment
-==========================
+### Bootstrap your environment
 
 To bootstrap your environment, use the standalone conda approach in your
 `appveyor.yml`:

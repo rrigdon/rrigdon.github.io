@@ -1,3 +1,8 @@
+---
+search:
+    exclude: true
+---
+
 # Getting started
 
 Before starting the tutorials, consider reviewing

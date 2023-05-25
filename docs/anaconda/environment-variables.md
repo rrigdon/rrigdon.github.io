@@ -1,9 +1,11 @@
-# Environment variables {#env-vars}
+---
+search:
+    exclude: true
+---
 
-::: {.contents local="" depth="1"}
-:::
+# Environment variables 
 
-## Dynamic behavior based on state of build process {#build-state}
+## Dynamic behavior based on state of build process 
 
 There are times when you may want to process a single file in different
 ways at more than one step in the render-build-test flow of conda-build.
