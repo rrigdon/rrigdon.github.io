@@ -105,9 +105,15 @@ plugins:
   - autolinks
   - redirects
 
-  # Page tree
+# Page tree
 nav:
   - Home: index.md
+  - Anaconda:
+    - anaconda/index.md
+    - Conda: anaconda/conda.md
+    - Miniconda: anaconda/miniconda.md
+    - Build Recipes: anaconda/recipe.md
+    - Building Skeleton Packages: anaconda/build-pkgs-skeleton.md
   - Cloud Governance:
     - cloud_gov/index.md
     - Configuring your CSPs:
