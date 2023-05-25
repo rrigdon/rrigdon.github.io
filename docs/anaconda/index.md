@@ -11,4 +11,3 @@ A few examples from my time at Anaconda include:
 - [Building conda packages](building-conda-packages.md)
 - [Building conda packages from scratch](building-conda-packages.md)
 - [Using conda with Travis CI](using-conda-with-travis-ci.md)
-
