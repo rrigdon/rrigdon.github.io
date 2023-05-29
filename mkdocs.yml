@@ -41,6 +41,9 @@ plugins:
 
 # extra: 
 extra:
+  analytics:
+    provider: google
+    property: G-378943388
   annotate:
     json: [.s2]
   social:
