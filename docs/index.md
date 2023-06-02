@@ -13,6 +13,6 @@ You can view samples of my writing from:
 
 ## Additional Resources
 
-- :fontawesome-solid-file-pdf: [Resume](assets/resume.pdf)
+- :fontawesome-solid-file-pdf: [Resume](assets/june_resume.pdf)
 - :fontawesome-brands-linkedin: [LinkedIn profile](https://www.linkedin.com/in/rachel-rigdon/)
 - :material-email: [Email](mailto:rmrigdon@gmail.com)
