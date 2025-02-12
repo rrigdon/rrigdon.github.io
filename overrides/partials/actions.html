@@ -1,0 +1,30 @@
+<!-- Actions - this adds email icon to the top of the page -->
+{% if not 'actions' in page.meta.hide %}
+  <!-- Leave a LinkedIn button -->
+  {% if "content.action.edit" in features %}
+    <a
+      href="mailto:rmrigdon@gmail.com"
+      title="Email me"
+      class="md-content__button md-icon"
+    >
+      {% set icon = config.theme.icon.edit or "octicons/comment-16" %}
+      {% include ".icons/" ~ icon ~ ".svg" %}
+    </a>
+  {% endif %}
+{% endif %}
+
+<!-- View - this adds the LinkedIn icon to the top of the page -->
+{% if not 'actions' in page.meta.hide %}
+  <!-- Leave a LinkedIn button -->
+  {% if "content.action.view" in features %}
+    <a
+      href="https://www.linkedin.com/in/rachel-rigdon/" target="_blank"
+      title="View my LinkedIn Profile"
+      class="md-content__button md-icon"
+    >
+      {% set icon = config.theme.icon.view or "octicons/comment-16" %}
+      {% include ".icons/" ~ icon ~ ".svg" %}
+    </a>
+  {% endif %}
+{% endif %}
+

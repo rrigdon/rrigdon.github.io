@@ -2,7 +2,7 @@
 
 ## As a professor
 
-I taught 3 Communication Studies courses at Southwestern University in Georgetown, TX in 2015 - 2016.
+I taught three Communication Studies courses at Southwestern University in Georgetown, TX in 2015 - 2016.
 
   - :fontawesome-solid-file-pdf: [Public Speaking and Civic Engagement Syllabus](assets/public_speaking_syllabus.pdf)
 

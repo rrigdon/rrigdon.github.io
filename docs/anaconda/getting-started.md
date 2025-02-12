@@ -17,18 +17,17 @@ collection helpful.
 
 ## Prerequisites {#prereqs}
 
-Before starting the tutorials, you will need to install [Miniconda or
-Anaconda](https://docs.anaconda.com/anaconda/install/), conda build, and
-git.
+Before starting the tutorials, you will need to install Miniconda or
+Anaconda, conda build, andgit.
 
-After you\'ve installed Miniconda or Anaconda, you can use conda to
+After you've installed Miniconda or Anaconda, you can use conda to
 install conda build and git.
 
 ## Tutorial submissions {#submissions}
 
 Have an idea for a tutorial? You can submit your suggestions to Anaconda
 by emailing us at
-[documentation@anaconda.com](documentation@anaconda.com).
+[documentation@anaconda.com](mailto:documentation@anaconda.com).
 
 To create your own tutorials, follow the
 `writing style guide <../resources/style-guide>`{.interpreted-text
