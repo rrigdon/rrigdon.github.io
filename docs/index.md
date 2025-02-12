@@ -8,7 +8,7 @@ I am currently the Lead Technical Writer for SaaS documentation at SailPoint Tec
 
 In addition to my writing experience, I excel at project development and cross-functional collaboration. I've launched multiple projects increasing the reach and engagement of product documentation with customers.
 
-In my free time, I enjoy traveling, playing video games, cooking, mentoring youth, and learning new technologies.
+In my free time, I enjoy traveling, playing video games, cooking, mentoring youth, and learning new technologies. 
 
 ## Writing Samples
 
