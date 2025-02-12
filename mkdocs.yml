@@ -3,19 +3,18 @@ site_name: Rachel Rigdon's Writing Portfolio
 site_url: https://rrigdon.github.io/
 site_author: Rachel Rigdon
 
-# Repository
-repo_name: rrigdon/rrigdon.github.io
-repo_url: https://github.com/rrigdon/rrigdon.github.io
-
 # Copyright
-copyright: Copyright &copy; 2023 Rachel Rigdon
+copyright: Copyright &copy; 2025 Rachel Rigdon
 
 # Configuration
 theme:
   name: material
-  custom_dir: src/overrides
+  custom_dir: overrides
   logo: assets/letter_r.png
   favicon: assets/letter_r.png
+  icon:
+    view: material/linkedin
+    edit: material/email
   features:
     - content.code.annotate
     - content.tooltips
@@ -29,6 +28,8 @@ theme:
     - search.suggest
     - toc.follow
     - announce.dismiss
+    - content.action.edit
+    - content.action.view
 
 
 # Plugins
@@ -36,6 +37,8 @@ plugins:
   - search
   - autolinks
   - redirects
+  - glightbox
+
 
 # Customization
 
@@ -87,11 +90,6 @@ markdown_extensions:
       title: On this page
       toc_depth: 3
 
-plugins:
-  - search
-  - autolinks
-  - redirects
-  - glightbox
 
 # Page tree
 nav:
