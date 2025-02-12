@@ -2,3 +2,7 @@ mkdocs-material
 mkdocs-autolinks-plugin
 mkdocs-redirects 
 mkdocs-glightbox
+mkdocs
+pillow
+cairo-svg
+pymdown-extensions
