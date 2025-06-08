@@ -6,6 +6,12 @@
     background-color: rgb(152, 92, 226);
 }
 
+
+nav.md-nav--primary label.md-nav__title {
+    background-color: white !important;    
+}
+
+
 /* Announcement banner - only displays when main.html has the announce block overridden*/
 
 .md-banner {
