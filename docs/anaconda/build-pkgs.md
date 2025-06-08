@@ -167,7 +167,7 @@ Use the `conda convert` command with a platform specifier from the list:
 -   `win-64`
 -   `all`
 
-!!! example 
+!!! example
 
     To use the platform specifier `all`:
 
@@ -176,7 +176,7 @@ Use the `conda convert` command with a platform specifier from the list:
     ```
 
 !!! note
-    Change your path and filename to the path and filename you saved in [Building and installing](#building-and-installing-build-and-install).
+    Change your path and filename to the path and filename you saved in [Building and installing](#building-and-installing).
 
 ## Using PyPI as the source instead of GitHub
 
@@ -232,7 +232,7 @@ only takes a minute to do if you have a free Anaconda.org account.
     ```
 
     !!! note
-        Change your path and filename to the path and filename you saved in [Building and installing](#building-and-installing-build-and-install)
+        Change your path and filename to the path and filename you saved in [Building and installing](#building-and-installing)
 
     !!! Tip
 

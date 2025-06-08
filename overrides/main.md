@@ -1,3 +1,5 @@
+<!--To add the banner back, change to .html -->
+
 {% extends "base.html" %}
 
 {% block announce %}
