@@ -12,7 +12,7 @@ In my free time, I enjoy traveling, playing video games, cooking, mentoring yout
 
 ## Write the Docs 2025 Presentation
 
-In May 2025, I spoke at Write the Docs Portland. My speech was titled [Quest for the Holy Grail: Turning User Feedback Into Meaningful Change](https://www.writethedocs.org/conf/portland/2025/speakers/#speaker-rachel-rigdon-quest-for-the-holy-grail-turning-user-feedback-into-meaningful-change-rachel-rigdon).
+In May 2025, I spoke at Write the Docs Portland. My speech was titled [Quest for the Holy Grail: Turning User Feedback Into Meaningful Change](https://www.writethedocs.org/conf/portland/2025/speakers/#speaker-rachel-rigdon-quest-for-the-holy-grail-turning-user-feedback-into-meaningful-change-rachel-rigdon){:target="_blank"}.
 
 ??? "Expand to view abstract"
 
