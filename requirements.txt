@@ -1,7 +1,7 @@
-mkdocs-material==9.6.14
-mkdocs-autolinks-plugin==0.7.0
-mkdocs-redirects==1.2.0 
-mkdocs-glightbox==0.3.4
-mkdocs==1.6.1
-pillow==9.5.0
-pymdown-extensions==10.15
+mkdocs-material
+mkdocs-autolinks-plugin
+mkdocs-redirects
+mkdocs-glightbox
+mkdocs
+pillow
+pymdown-extensions
