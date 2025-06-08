@@ -1,0 +1,1415 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Rachel Rigdon">
+      
+      
+        <link rel="canonical" href="https://rrigdon.github.io/anaconda/building-conda-packages/">
+      
+      
+        <link rel="prev" href="../build-pkgs-skeleton/">
+      
+      
+        <link rel="next" href="../build-pkgs/">
+      
+      
+      <link rel="icon" href="../../assets/letter_r.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.3">
+    
+    
+      
+        <title>Building conda packages - Rachel Rigdon's Writing Portfolio</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.d7758b05.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-V7PBXBTD21"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-V7PBXBTD21",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-V7PBXBTD21",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#building-conda-packages" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="Don't show this again">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+              </button>
+            
+            
+<span class="twemoji">
+
+   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.25 9a.75.75 0 0 1 .75.75c0 2.142.456 3.828.733 4.653a.12.12 0 0 0 .05.064.2.2 0 0 0 .117.033h1.31c.085 0 .18-.042.258-.152a.45.45 0 0 0 .075-.366A16.7 16.7 0 0 1 6 9.75a.75.75 0 0 1 1.5 0c0 1.588.25 2.926.494 3.85.293 1.113-.504 2.4-1.783 2.4H4.9c-.686 0-1.35-.41-1.589-1.12A16.4 16.4 0 0 1 2.5 9.75.75.75 0 0 1 3.25 9"/><path d="M0 6a4 4 0 0 1 4-4h2.75a.75.75 0 0 1 .75.75v6.5a.75.75 0 0 1-.75.75H4a4 4 0 0 1-4-4m4-2.5a2.5 2.5 0 1 0 0 5h2v-5Z"/><path d="M15.59.082A.75.75 0 0 1 16 .75v10.5a.75.75 0 0 1-1.189.608l-.002-.001h.001l-.014-.01a6 6 0 0 0-.422-.25 10.6 10.6 0 0 0-1.469-.64C11.576 10.484 9.536 10 6.75 10a.75.75 0 0 1 0-1.5c2.964 0 5.174.516 6.658 1.043.423.151.787.302 1.092.443V2.014c-.305.14-.669.292-1.092.443C11.924 2.984 9.713 3.5 6.75 3.5a.75.75 0 0 1 0-1.5c2.786 0 4.826-.484 6.155-.957.665-.236 1.154-.47 1.47-.64q.216-.116.421-.25l.014-.01a.75.75 0 0 1 .78-.061"/></svg>  &nbsp;
+ 
+ </span>
+   
+ I'm speaking at <a href="https://www.writethedocs.org/conf/portland/2025/speakers/" target="_blank">Write the Docs</a> in May 2025!
+ 
+ </span>
+
+          </div>
+          
+            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Rachel Rigdon&#39;s Writing Portfolio" class="md-header__button md-logo" aria-label="Rachel Rigdon's Writing Portfolio" data-md-component="logo">
+      
+  <img src="../../assets/letter_r.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rachel Rigdon's Writing Portfolio
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Building conda packages
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Rachel Rigdon&#39;s Writing Portfolio" class="md-nav__button md-logo" aria-label="Rachel Rigdon's Writing Portfolio" data-md-component="logo">
+      
+  <img src="../../assets/letter_r.png" alt="logo">
+
+    </a>
+    Rachel Rigdon's Writing Portfolio
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../id_security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Identity Security
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Anaconda
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Anaconda
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Conda-build recipes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build-pkgs-skeleton/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building skeleton packages
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Building conda packages
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Building conda packages
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#who-is-this-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      Who is this for?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#before-you-start4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Before you start
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#toolkit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Toolkit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Toolkit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#microsoft-visual-studio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Microsoft Visual Studio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alternatives-to-microsoft-visual-studio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alternatives to Microsoft Visual Studio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Windows versions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other tools
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#developing-a-build-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Developing a build strategy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-with-a-python-version-different-from-your-miniconda-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building with a Python version different from your Miniconda installation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automated-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automated testing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-a-sep-package-with-conda-and-python-2-or-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building a SEP package with conda and Python 2 or 3
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Building a SEP package with conda and Python 2 or 3">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-visual-studio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install Visual Studio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#make-a-conda-skeleton-recipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      Make a conda skeleton recipe
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edit-the-skeleton-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Edit the skeleton files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-the-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build the package
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-the-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Check the output
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-a-gdal-package-with-conda-and-python-2-or-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building a GDAL package with conda and Python 2 or 3
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build-pkgs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building conda packages from scratch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../use-conda-with-travis-ci/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Using conda with Travis CI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../disco/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Legaltech
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../academic/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Academic
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#who-is-this-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      Who is this for?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#before-you-start4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Before you start
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#toolkit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Toolkit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Toolkit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#microsoft-visual-studio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Microsoft Visual Studio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alternatives-to-microsoft-visual-studio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alternatives to Microsoft Visual Studio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Windows versions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other tools
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#developing-a-build-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Developing a build strategy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-with-a-python-version-different-from-your-miniconda-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building with a Python version different from your Miniconda installation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automated-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automated testing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-a-sep-package-with-conda-and-python-2-or-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building a SEP package with conda and Python 2 or 3
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Building a SEP package with conda and Python 2 or 3">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-visual-studio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install Visual Studio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#make-a-conda-skeleton-recipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      Make a conda skeleton recipe
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edit-the-skeleton-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Edit the skeleton files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-the-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build the package
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-the-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Check the output
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-a-gdal-package-with-conda-and-python-2-or-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building a GDAL package with conda and Python 2 or 3
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+<!-- Actions - this adds email icon to the top of the page -->
+
+  <!-- Leave a LinkedIn button -->
+  
+    <a
+      href="mailto:rmrigdon@gmail.com"
+      title="Email me"
+      class="md-content__button md-icon"
+    >
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m20 8-8 5-8-5V6l8 5 8-5m0-2H4c-1.11 0-2 .89-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2"/></svg>
+    </a>
+  
+
+
+<!-- View - this adds the LinkedIn icon to the top of the page -->
+
+  <!-- Leave a LinkedIn button -->
+  
+    <a
+      href="https://www.linkedin.com/in/rachel-rigdon/" target="_blank"
+      title="View my LinkedIn Profile"
+      class="md-content__button md-icon"
+    >
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93zM6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37z"/></svg>
+    </a>
+  
+
+
+
+<h1 id="building-conda-packages">Building conda packages</h1>
+<p>This tutorial describes how to use conda build to create conda packages
+on Windows, Linux, and Mac operating systems using the examples of SEP
+and GDAL. Additional Windows-specific instructions are provided in the
+<code class="interpreted-text" role="ref">toolkit</code> section.</p>
+<p>The final built packages from this tutorial are available on <a href="https://anaconda.org">Anaconda
+Cloud</a>:</p>
+<ul>
+<li><a href="https://anaconda.org/wwarner/sep/files">SEP</a></li>
+<li><a href="https://anaconda.org/conda-forge/gdal/files">GDAL</a></li>
+</ul>
+<p>This tutorial also describes writing recipes. You can see the final <a href="https://github.com/conda-forge/sep-feedstock">SEP
+recipe</a> and the <a href="https://github.com/conda-forge/gdal-feedstock">GDAL
+recipe</a> on GitHub in the
+<a href="https://github.com/conda/conda-build/tree/master/docs">conda documentation
+repository</a>.</p>
+<h2 id="who-is-this-for">Who is this for?</h2>
+<p>This tutorial is for Windows, macOS, and Linux users who wish to build
+more complex conda packages. This tutorial will involve building
+scientific packages, which require compilers for several different
+Python versions.</p>
+<h2 id="before-you-start4">Before you start</h2>
+<p>Before you start, make sure you have installed:</p>
+<ul>
+<li>conda</li>
+<li>conda build</li>
+<li>any compilers you want</li>
+</ul>
+<h2 id="toolkit">Toolkit</h2>
+<h3 id="microsoft-visual-studio">Microsoft Visual Studio</h3>
+<p>In the standard practices of the conda developers, conda packages for
+different versions of Python are each built with their own version of
+Visual Studio (VS):</p>
+<ul>
+<li>Python 2.7 packages with Visual Studio 2008</li>
+<li>Python 3.4 packages with VS 2010</li>
+<li>Python 3.5 packages with VS 2015, (default) 2017</li>
+<li>Python 3.6 packages with VS 2015, (default) 2017</li>
+<li>Python 3.7 packages with VS 2015, (default) 2017</li>
+</ul>
+<p>Using these versions of VS to build packages for each of these versions
+of Python is also the practice used for the official python.org builds
+of Python. Currently VS 2008 and VS 2010 are available only through
+resellers, while VS 2015 and VS 2017 can be purchased online from
+Microsoft. Note there is also a community edition of VS 2015 and VS 2017
+which may be used.</p>
+<h3 id="alternatives-to-microsoft-visual-studio">Alternatives to Microsoft Visual Studio</h3>
+<p>There are free alternatives available for each version of the VS
+compilers:</p>
+<ul>
+<li>Instead of VS 2008, it is often possible to substitute the <a href="https://www.microsoft.com/en-us/download/details.aspx?id=44266">free
+    Microsoft Visual C++ Compiler for Python
+    2.7</a>.</li>
+<li>Instead of VS 2010, it is often possible to substitute the <a href="https://www.microsoft.com/en-us/download/details.aspx?id=8279">free
+    Microsoft Windows SDK for Windows 7 and .NET Framework
+    4</a>.</li>
+<li>Make sure that you also install <a href="https://www.microsoft.com/en-us/download/details.aspx?id=34677">VS 2010 Service Pack 1
+    (SP1)</a>.</li>
+<li>Due to a bug in the VS 2010 SP1 installer, the compiler tools may be
+    removed during installation of VS 2010 SP1. They can be restored as
+    described in <a href="https://www.microsoft.com/en-us/download/details.aspx?id=4422">Microsoft Visual C++ 2010 Service Pack 1 Compiler
+    Update for the Windows SDK
+    7.1</a>.</li>
+<li>Visual Studio 2015 has a <a href="https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx">full-featured, free Community
+    edition</a>
+    for academic research, open source projects and certain other use
+    cases.</li>
+</ul>
+<p>The MS Visual C++ Compiler for Python 2.7 and the Microsoft Windows SDK
+for Windows 7 and .NET Framework 4 are both reasonably well tested.
+Conda build is carefully tested to support these configurations, but
+there are known issues with the CMake build tool and these free VS 2008
+and 2010 alternatives. In these cases, you should prefer the "NMake
+Makefile" generator, rather than a Visual Studio solution generator.</p>
+<h3 id="windows-versions">Windows versions</h3>
+<p>You can use any recent version of Windows. These examples were built on
+Windows 10.</p>
+<h3 id="other-tools">Other tools</h3>
+<p>Some environments initially lack tools such as patch or Git that may be
+needed for some build workflows.</p>
+<p>On Windows these can be installed with conda:</p>
+<p><code>conda install git m2-patch</code></p>
+<p>On macOS and Linux replace <code>m2-patch</code> with <code>patch</code></p>
+<h2 id="developing-a-build-strategy">Developing a build strategy</h2>
+<p>Conda recipes are typically built with a trial-and-error method. Often
+the first attempt to build a package fails with compiler or linker
+errors, often caused by missing dependencies. The person writing the
+recipe then examines these errors and modifies the recipe to include the
+missing dependencies, usually as part of the <code>meta.yaml</code> file. Then the
+recipe writer attempts the build again and, after a few of these cycles
+of trial and error, the package builds successfully.</p>
+<h2 id="building-with-a-python-version-different-from-your-miniconda-installation">Building with a Python version different from your Miniconda installation</h2>
+<p>Miniconda2 and Miniconda3 can each build packages for either Python 2 or
+Python 3 simply by specifying the version you want. Miniconda2 includes
+only Python 2 and Miniconda3 includes only Python 3.</p>
+<p>Installing only one makes it easier to keep track of the builds, but it
+is possible to have both installed on the same system at the same time.
+If you have both installed, use the <code>where</code> command on Windows, or
+<code>which</code> command on Linux to see which version comes first on PATH since
+this is the one you will be using:</p>
+<div class="language-text highlight"><pre><span></span><code>where python
+</code></pre></div>
+<p>To build a package for a Python version other than the one in your
+Miniconda installation, use the <code>--python</code> option in the <code>conda-build</code>
+command.</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p>To build a Python 3.5 package with Miniconda2:</p>
+<p><code>conda-build recipeDirectory --python=3.5</code></p>
+<p>Replace <code>recipeDirectory</code> with the name and path of your recipe
+directory.</p>
+</div>
+<h2 id="automated-testing">Automated testing</h2>
+<p>After the build, if the recipe directory contains a test file named
+<code>run_test.bat</code> on Windows, or <code>run_test.sh</code> on macOS or Linux, or
+<code>run_test.py</code> on any platform, the file runs to test the package, and
+any errors are reported. After seeing "check the output," you can also
+test if this package was built by using the command:</p>
+<div class="language-text highlight"><pre><span></span><code>conda build --test &lt;path to package&gt;.tar.bz2
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Use the Test section of the <code>meta.yaml</code> file to move data files from the
+recipe directory to the test directory when the test is run.</p>
+</div>
+<h2 id="building-a-sep-package-with-conda-and-python-2-or-3">Building a SEP package with conda and Python 2 or 3</h2>
+<p>The <a href="https://sep.readthedocs.io">SEP documentation</a> states that SEP runs
+on Python 2 and 3, and it depends only on NumPy. Searching for SEP and
+PyPI shows that there is already <a href="https://pypi.python.org/pypi/sep">a PyPI package for
+SEP</a>.</p>
+<p>Because a PyPI package for SEP already exists, the <code>conda skeleton</code>
+command can make a skeleton or outline of a conda recipe based on the
+PyPI package. Then the recipe outline can be completed manually and
+conda can build a conda package from the completed recipe.</p>
+<h3 id="install-visual-studio">Install Visual Studio</h3>
+<p>If you have not already done so, install the appropriate version of
+Visual Studio:</p>
+<p>For Python 3- Visual Studio 2017:
+    1.  Choose Custom install.
+    2.  Under Programming Languages, choose to install Visual C++.</p>
+<p>For Python 2-Visual Studio 2008:
+    1.  Choose Custom install.
+    2.  Choose to install X64 Compilers and Tools. 
+    3.  Install Service Pack.</p>
+<h3 id="make-a-conda-skeleton-recipe">Make a conda skeleton recipe</h3>
+<ol>
+<li>
+<p>Run the skeleton command:</p>
+<div class="language-text highlight"><pre><span></span><code>conda skeleton pypi sep
+</code></pre></div>
+<p>The <code>skeleton</code> command installs into a newly created directory
+called <code>sep</code>.</p>
+</li>
+<li>
+<p>Go to the <code>sep</code> directory to view the files:</p>
+<div class="language-text highlight"><pre><span></span><code>cd sep
+</code></pre></div>
+</li>
+</ol>
+<p>One skeleton file has been created: <code>meta.yaml</code></p>
+<h3 id="edit-the-skeleton-files">Edit the skeleton files</h3>
+<p>For this package, <code>bld.bat</code> and <code>build.sh</code> need no changes. You need to
+edit the <code>meta.yaml</code> file to add the dependency on NumPy and add an
+optional test for the built package by importing it.</p>
+<ol>
+<li>In the requirements section of the <code>meta.yaml</code> file, add a line that
+    adds NumPy as a requirement to build the package.</li>
+<li>Add a second line to list NumPy as a requirement to run the package.</li>
+<li>
+<p>Set the NumPy version to the letters <code>x.x</code>.</p>
+<p>Make sure the new line is aligned with <code>- python</code> on the line above it, so as to ensure proper yaml format.</p>
+</li>
+</ol>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">requirements</span><span class="p">:</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">host</span><span class="p">:</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">numpy     x.x</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nt">run</span><span class="p">:</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">numpy     x.x</span>
+</span></code></pre></div>
+</div>
+<p>Notice that there are two types of requirements, host and run. Host
+represents packages that need to be specific to the target platform when
+the target platform is not necessarily the same as the native build
+platform. Run represents the dependencies that should be installed when
+the package is installed.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Using the letters <code>x.x</code> instead of a specific version such as <code>1.11</code>
+pins NumPy dynamically, so that the actual version of NumPy is taken
+from the build command. Currently, NumPy is the only package that can be
+pinned dynamically. Pinning is important for SEP because this package
+uses NumPy's C API through Cython. That API changes between NumPy
+versions, so it is important to use the same NumPy version at runtime
+that was used at build time.</p>
+</div>
+<h4 id="add-a-test-for-the-built-package">Add a test for the built package</h4>
+<p>Adding this optional test will test the package at the end of the build
+by making sure that the Python statement <code>import sep</code> runs successfully:</p>
+<p>Add <code>- sep</code>, checking to be sure that the indentation is consistent
+    with the rest of the file.</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">test</span><span class="p">:</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1"># Python imports</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nt">imports</span><span class="p">:</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sep</span>
+</span></code></pre></div>
+</div>
+<h3 id="build-the-package">Build the package</h3>
+<p>Build the package using the recipe you just created:</p>
+<div class="language-text highlight"><pre><span></span><code>conda build sep
+</code></pre></div>
+<h3 id="check-the-output">Check the output</h3>
+<p>Check the output to make sure that the build completed successfully.
+    The output contains the location of the final package file and a
+    command to upload the package to Anaconda Cloud. The output will
+    look something like:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Automatic uploading is disabled</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># If you want to upload package(s) to anaconda.org later, type:</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="l l-Scalar l-Scalar-Plain">anaconda upload /Users/builder/miniconda3/conda-bld/osx-64/sep-1.0.3-np111py36_0.tar.bz2</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="l l-Scalar l-Scalar-Plain"># To have conda build upload to anaconda.org automatically, use</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="l l-Scalar l-Scalar-Plain"># $ conda config --set anaconda_upload yes</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="l l-Scalar l-Scalar-Plain">anaconda_upload is not set.  Not uploading wheels</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1">####################################################################################</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="nt">Resource usage summary</span><span class="p">:</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="nt">Total time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0:00:56.4</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="nt">CPU usage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sys=0:00:00.7, user=0:00:07.0</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="nt">Maximum memory usage observed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">220.1M</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="nt">Total disk usage observed (not including envs)</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.9K</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="c1">####################################################################################</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="l l-Scalar l-Scalar-Plain">Source and build intermediates have been left in /Users/builder/miniconda3/conda-bld.</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="l l-Scalar l-Scalar-Plain">There are currently 437 accumulated.</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="l l-Scalar l-Scalar-Plain">To remove them, you can run the ```conda build purge``` command</span>
+</span></code></pre></div>
+<p>If there are any linker or compiler errors, modify the recipe and
+    build again.</p>
+<h2 id="building-a-gdal-package-with-conda-and-python-2-or-3">Building a GDAL package with conda and Python 2 or 3</h2>
+<p>This procedure describes how to build a package with Python 2 or Python
+3. Follow the instructions for your preferred version.</p>
+<p>To begin, install Anaconda or Miniconda and conda build. If you are
+using a Windows machine, also use conda to install git and the m2-patch.</p>
+<p><code>conda install git</code></p>
+<p><code>conda install m2-patch</code></p>
+<p>Because GDAL includes C and C++, building it on Windows requires Visual
+Studio. This procedure describes how to build a package with Python 2 or
+Python 3. Follow the instructions for the version that you want to build
+with.</p>
+<p>To build a GDAL package:</p>
+<ol>
+<li>
+<p>Install Visual Studio:</p>
+<ul>
+<li>For Python 3, install <a href="https://docs.microsoft.com/en-us/visualstudio/install/install-visual-studio?view=vs-2017">Visual Studio
+    2017</a>.
+    Choose Custom install. Under Programming Languages, select
+    workloads that come from Visual Studio so you choose the Desktop
+    Development with C++ and Universal Platform C.</li>
+<li>For Python 2, install <a href="http://download.microsoft.com/download/E/8/E/E8EEB394-7F42-4963-A2D8-29559B738298/VS2008ExpressWithSP1ENUX1504728.iso">Visual Studio
+    2008</a>.
+    Choose Custom install. Choose to install X64 Compilers and
+    Tools. Install Visual Studio 2008 Service Pack 1.</li>
+</ul>
+</li>
+<li>
+<p>Install Git. Because the GDAL package sources are retrieved from
+    GitHub for the build, you must install Git.</p>
+<p><code>conda install git m2-patch conda-build</code></p>
+</li>
+<li>
+<p>Get gdal-feedstock. For the purpose of this tutorial, we will be
+    using a recipe from Anaconda.</p>
+<p><code>git clone https://github.com/AnacondaRecipes/gdal-feedstock.git</code></p>
+</li>
+<li>
+<p>Use conda build to build the gdal-feedstock.</p>
+<p><code>conda build gdal-feedstock</code></p>
+</li>
+<li>
+<p>Check the output to make sure the build completed successfully. The
+    output also contains the location of the final package file and a
+    command to upload the package to Cloud. For this package in
+    particular, there should be two packages that are output: libgdal and
+    GDAL.</p>
+</li>
+<li>
+<p>In case of any linker or compiler errors, modify the recipe and run
+    it again.</p>
+<details>
+<summary>Closer look at the gdal-feedstock</summary>
+<p>Let's take a better look at what's happening inside the GDAL-feedstock.
+In particular, what is happening in the <code>meta.yaml</code>.</p>
+<p>The first interesting bit happens under <code>source</code> in the patches
+section:</p>
+<div class="language-text highlight"><pre><span></span><code>patches:
+# BUILT_AS_DYNAMIC_LIB.
+- 0001-windowshdf5.patch
+# Use multiple cores on Windows.
+- 0002-multiprocessor.patch
+# disable 12 bit jpeg on Windows as we aren&#39;t using internal jpeg
+- 0003-disable_jpeg12.patch
+</code></pre></div>
+<p>This section says that when this package is being built on a Windows
+platform, apply the following patch files. Notice that the patch files
+are in the patches directory of the recipe. These patches
+will only be applied to Windows since the <code># [win]</code> selector is applied
+to each of the patch entries.</p>
+<p>In the requirements section, notice how there are both a build and host
+set of requirements. For this recipe, all the compilers required to
+build the package are listed in the build requirements.</p>
+<p>Normally, the requirements section will list out packages required to build the package. GDAL requires CMake on Windows, as well as C compilers. Notice that the C
+compilers are pulled into the recipe using the syntax
+<code>{{ compiler('c') }}</code>. Since conda build 3, conda build defines a jinja2
+function <code>compiler()</code> to specify compiler packages dynamically. So,
+using the <code>compiler(‘c’)</code> function in a conda recipe will pull in the
+correct compiler for any build platform.</p>
+<p>You can see that the compilers used by conda build can be specified using
+a <code>conda_build_config.yaml</code>.</p>
+<p>Notice that this package has an <code>outputs</code> section. This section is a
+list of packages to output as a result of building this package. In this
+case, the packages libgdal and GDAL will be built. Similar to a normal
+recipe, the outputs can have build scripts, tests scripts and
+requirements specified.</p>
+</details>
+</li>
+<li>
+<p>Build GDAL against some build matrix. We will specify
+building against Python 3.7 and 3.5 using a conda build config. Add the
+following to your <code>conda_build_config.yaml</code>.</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">python</span><span class="p">:</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.7</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.5</span>
+</span></code></pre></div>
+</li>
+<li>
+<p>Now you can build GDAL using conda-build: <code>conda build gdal-feedstock</code></p>
+<p>Or explicitly set the location of the conda build variant matrix: <code>conda build gdal-feedstock --variant-config-file conda_build_config.yaml</code></p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../build-pkgs-skeleton/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Building skeleton packages">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Building skeleton packages
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../build-pkgs/" class="md-footer__link md-footer__link--next" aria-label="Next: Building conda packages from scratch">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Building conda packages from scratch
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 Rachel Rigdon
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/rachel-rigdon/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5m282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.instant", "navigation.prune", "navigation.top", "navigation.tracking", "search.highlight", "search.suggest", "toc.follow", "announce.dismiss", "content.action.edit", "content.action.view"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f1b6f286.min.js"></script>
+      
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
+</html>
