@@ -4,11 +4,11 @@ My first job was at 13 writing about rodeos and stick horse races, and I haven't
 
 ![A blonde, white woman in black professional dress smiles at the camera.](Headshot.jpg){ align=left }
 
-I am currently the Lead Technical Writer for SaaS documentation at SailPoint Technologies in Austin, TX. I'm a vocal advocate for centering users' needs in product and doc decisions. I love a technical challenge and specialize in setting up docs-as-code systems and information architectures. I'm also passionate about mentoring, both at work and with volunteer organizations.
+I am currently the Staff Technical Writer for SaaS documentation at SailPoint Technologies in Austin, TX. I'm a vocal advocate for centering users' needs in product and doc decisions. I love a technical challenge and specialize in setting up docs-as-code systems and information architectures. I'm also passionate about mentoring, both at work and with volunteer organizations.
 
-In addition to my writing experience, I excel at project development and cross-functional collaboration. I've launched multiple projects increasing the reach and engagement of product documentation with customers.
+In addition to my writing experience, I excel at project development and cross-functional collaboration. In 2024 I successfully launched a documentation feedback system that added feedback options to 7,500 documentation pages, resulting in greater customer reach and engagement, substantial documentation improvement, and reduced support tickets. I presented the results and lessons from that system at [Write the Docs](#write-the-docs-2025-presentation) and in a [Document360 webinar](#document360-webinar).
 
-In my free time, I enjoy traveling, playing video games, cooking, mentoring youth, and learning new technologies. 
+In my free time, I enjoy traveling, playing video games, cooking, mentoring youth, and learning new technologies.
 
 ## Write the Docs 2025 Presentation
 

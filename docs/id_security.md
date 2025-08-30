@@ -1,6 +1,6 @@
 # Identity Security Writing Samples
 
-I created and implemented the docs-as-code setup for SailPoint Technolgies, which included training 10+ writers in using the custom stack to publish 11+ websites.
+I created, implemented, and maintain the docs-as-code setup for SailPoint Technologies, which included training 13+ writers to use the custom stack to create and publish 11+ websites.
 
 I additionally manage the documentation for multiple identity security and access governance products for SailPoint Technologies, including:
 
@@ -13,3 +13,4 @@ I additionally manage the documentation for multiple identity security and acces
 - [Cloud Access Management](https://documentation.sailpoint.com/cam/help/)
 
 - [Source Configuration and Management](https://documentation.sailpoint.com/saas/help/sources/index.html)
+ 
