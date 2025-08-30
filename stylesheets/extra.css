@@ -1,0 +1,36 @@
+.md-header__topic:first-child {
+    font-weight: 400;
+}
+
+.md-header {
+    background-color: rgb(152, 92, 226);
+}
+
+
+nav.md-nav--primary label.md-nav__title {
+    background-color: white !important;    
+}
+
+
+/* Announcement banner - only displays when main.html has the announce block overridden*/
+
+.md-banner {
+    background-color: #352432;
+    color: white;
+  font-weight: 600;
+  font-size: 18.66px;
+  }
+  
+  .md-banner a:link {
+  color: white;
+  text-decoration: underline;
+  }
+  
+  .md-banner a:visited {
+  color: white;
+  text-decoration: underline;
+  }
+  
+  .md-banner a:hover {
+  color:  #dae1e9;
+  }
